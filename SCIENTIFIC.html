@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/script.js/2.0.2/script.min.js" integrity="sha512-UWtTDM6wtl/qutDD6i1JOGZGiEd92dveVzuLl8sMBkMHlOHcbZdexM7ZrKkeaugW7vhqDnWc2pPD/ohEV+BBbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const display = document.getElementById("disp");
+            const buttons = document.getElementsByClassName("btn");
+            let currentValue = "";
+
+            for (let i = 0; i < buttons.length; i++) {
+                const button = buttons[i];
+                button.addEventListener('click', function () {
+                    const value = button.innerText;
+
+                    function evalResult() {
+                        try {
+                            console.log("Current Value Before Conversion:", currentValue);
+                            const convertedValue = currentValue.replace(/x/g, "*")
+                                .replace(/÷/g, "/")
+                                .replace(/%/g, "*0.01")
+                                .replace(/Sin/g, "Math.sin")
+                                .replace(/Cos/g, "Math.cos")
+                                .replace(/Tan/g, "Math.tan")
+                                .replace(/Ln/g, "Math.log")
+                                .replace(/π/g, "Math.PI") // Replace pi correctly
+                                .replace(/e/g, "Math.E")
+                                .replace(/√/g, "Math.sqrt")
+                                .replace(/\^/g, "**");
+                            console.log("Converted Value:", convertedValue);
+                            const result = eval(convertedValue); // Safely evaluate the converted string
+                            currentValue = result.toString();
+                            display.value = currentValue;
+                        } catch (error) {
+                            console.error("Evaluation Error:",error);
+                            currentValue = "ERROR";
+                            display.value = currentValue;
+                        }
+                    }
+
+                    if (value === "AC") {
+                        currentValue = "";
+                        display.value = currentValue;
+                    } else if (value === "=") {
+                        evalResult();
+                    } else if (value === "←") { // Backspace functionality
+                        currentValue = currentValue.slice(0, -1);
+                        display.value = currentValue;
+                    } else {
+                        currentValue += value;
+                        display.value = currentValue;
+                    }
+                });
+            }
+        });
+    </script>
+
+    <div class="container">
+        <h1 class="text-center mt-3">Scientific Calculator</h1><br>
+        <div class="row">
+            <div class="offset-3 col-6">
+                <div class="card">
+                    <div class="card body">
+                        <input id="disp" readonly class="form-control form-control-lg text-end" type="text" placeholder="Enter What You Want to Calculate" aria-label=".form-control-lg example h-100">
+
+                        <div class="row mt-3 gx-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">(</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">)</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">%</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">AC</button>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 gx-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">7</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">8</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">9</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">÷</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3 gx-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">4</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">5</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">6</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">x</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3 gx-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">1</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">2</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">3</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">-</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3 gx-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">0</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary w-100">.</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-danger w-100">+</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3 gx-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">Sin</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">Cos</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">Tan</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">Ln</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3 gx-2">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">π</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">e</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">√</button>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-light w-100">^</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3 gx-2">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-light w-100">←</button> <!-- Backspace Button -->
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100">=</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
